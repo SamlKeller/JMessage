@@ -1,0 +1,20 @@
+{
+  "name": "jmessage",
+  "version": "1.0.0",
+  "description": "Messaging app for TJHSST",
+  "homepage": "https://github.com/SamlKeller/JMessage#readme",
+  "bugs": {
+    "url": "https://github.com/SamlKeller/JMessage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamlKeller/JMessage.git"
+  },
+  "license": "ISC",
+  "author": "Sam Stankiewicz & Nidhish Shakya",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "start"
+  }
+}
