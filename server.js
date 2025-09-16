@@ -20,9 +20,8 @@ import Utils from './utils.js';
 import EmailService from './emailService.js';
 
 import User from './Schemas/userSchema.js';
-import Comment from './Schemas/commentSchema.js';
-import Article from './Schemas/articleSchema.js';
-import welcomeArticle from './Schemas/welcomeArticleSchema.js';
+import Message from './Schemas/messageSchema.js';
+import Chat from './Schemas/chatSchema.js';
 
 
 const PORT = process.env.PORT || 3000;
@@ -1524,19 +1523,11 @@ app.get('/randomArticle', async (req, res) => {
     }
 });
 
-import accountRouter from './routes/accountRouter.js';
-import technicalRouter from './routes/technicalRouter.js';
 import { isNull } from "util";
 
-app.use('/profile', accountRouter);
-app.use('/technical', technicalRouter);
-
-app.get('*', (req, res) => {
-    console.log("Loading 404 for " + req.protocol + '://' + req.get('host') + req.originalUrl);
-    res.render('404', {
-        username: req.user?.username || null,
-        profilePic: req.user?.profilePic || null
-    });
+app.use((req, res) => {
+    console.log("404 at " + req.protocol + '://' + req.get('host') + req.originalUrl);
+    res.sendStatus(404);
 });
 
 mongoose.connection.once("open", () => {
