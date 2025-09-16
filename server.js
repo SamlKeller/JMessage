@@ -116,15 +116,8 @@ function checkFileType(file, cb) {
 }
 
 app.get('/', async (req, res) => {
-    let message = req.query.message || null;
     res.render('index', {
-        profilePic: req.user?.profilePic || null,
-        username: req.user?.username || null,
-        session: req.user || {
-            username: null
-        },
-        message: message,
-        settings: JSON.stringify(req.user?.settings) || null
+        message: "gygffyg"
     });
 });
 
@@ -246,26 +239,6 @@ app.get("/about", (req, res) => {
         username: req.user?.username || null,
         profilePic: req.user?.profilePic || null
     });
-});
-
-app.get("/welcomeArticle", /*Utils.ensureLogin,*/ async (req, res) => {
-
-    const ndUser = await User.findOne({ username: 'ND' });
-    const article = await welcomeArticle.findOne();
-
-    res.render('welcomeArticle', {
-        profilePic: 'ndProfile.png',
-        username: req.user?.username || null,
-        session: req.user || {
-            username: null
-        },
-        author: JSON.stringify(ndUser),
-        articleSpud: 'welcomeArticle',
-        loggedIn: req.isAuthenticated(),
-        articleViews: article.views || 0,
-        articleShares: article.shares || 0,
-    });
-
 });
 
 app.get("/privacy", (req, res) => {
