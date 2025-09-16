@@ -1523,8 +1523,6 @@ app.get('/randomArticle', async (req, res) => {
     }
 });
 
-import { isNull } from "util";
-
 app.use((req, res) => {
     console.log("404 at " + req.protocol + '://' + req.get('host') + req.originalUrl);
     res.sendStatus(404);
