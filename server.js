@@ -115,9 +115,9 @@ function checkFileType(file, cb) {
     }
 }
 
-app.get('/', async (req, res) => {
-    res.render('index', {
-        message: "gygffyg"
+app.get('/', (req, res) => {
+    res.render('home', {
+        user: req.user || null
     });
 });
 
@@ -161,78 +161,6 @@ app.post('/searchFor', async (req, res) => {
     return res.json(await searchResults(term, Math.max(1, Number(page) || 1), Number(type)));
 
 });
-
-async function searchResults(term, page, type) {
-
-    let pageSize = 10;
-
-    let articles = [];
-    let users = null;
-    let comments = null;
-
-    const articleQuery = { $text: { $search: term } };
-    const articleSort = { score: { $meta: "textScore" } };
-
-    const pagination = { skip: (page - 1) * pageSize, limit: pageSize };
-    const regex = new RegExp(term, 'i');
-
-    switch (type) {
-        case 0:
-        case 1:
-            articles = await Article.find(articleQuery, { score: { $meta: "textScore" } }) // full documents
-                .sort(articleSort)
-                .skip(pagination.skip)
-                .limit(pagination.limit)
-                .lean();
-            break;
-    }
-
-    if (type === 0 || type === 2) {
-
-        users = await User.find({
-                $or: [
-                    { username: regex },
-                    { name: regex }
-                ]
-        })
-
-        .skip(pagination.skip)
-        .select('-settings -password -lastLogin')
-        .limit(pagination.limit)
-        .lean();
-
-    }
-
-    if (type === 0 || type === 3) {
-        comments = await Comment.find(
-            { bodyText: regex } // no projection
-        )
-        .skip(pagination.skip)
-        .limit(pagination.limit)
-        .lean();
-    }
-
-    const originalArticles = [];
-    const responseArticles = [];
-
-    if (articles && Array.isArray(articles)) {
-        for (const a of articles) {
-            if (a.respondingTo == null) {
-                originalArticles.push(a);
-            } else {
-                responseArticles.push(a);
-            }
-        }
-    }
-
-    return {
-        articles: originalArticles,
-        responses: responseArticles,
-        users: users,
-        comments: comments
-    };
-
-}
 
 app.get("/about", (req, res) => {
     res.render('about', {
