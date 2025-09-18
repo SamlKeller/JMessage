@@ -123,6 +123,12 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/home', Utils.ensureLogin, (req, res) => {
+    res.render('index', {
+        user: req.user
+    });
+});
+
 app.get('/search', async (req, res) => {
 
     if (req.query.search) {
