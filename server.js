@@ -23,6 +23,8 @@ import User from './Schemas/userSchema.js';
 import Message from './Schemas/messageSchema.js';
 import Chat from './Schemas/chatSchema.js';
 
+import IonStrategy from './ionStrategy.js';
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -243,6 +245,123 @@ function cleanUser(usr) {
     return usr;
 
 }
+
+passport.use(IonStrategy);
+
+passport.serializeUser(function (user, done) {
+    done(null, user.username || user._doc?.username);
+});
+
+passport.deserializeUser(async function (username, done) {
+    try {
+        const user = await User.findOne({ username: username });
+        done(null, user);
+    } catch (err) {
+        done(err, null);
+    }
+});
+
+app.get('/auth/ion', (req, res, next) => {
+    passport.authenticate('ion')(req, res, next);
+});
+
+app.get('/auth/ion/callback', 
+    (req, res, next) => {
+        
+        passport.authenticate('ion', { 
+            failureRedirect: '/login?error=ion_auth_failed',
+            failureFlash: true 
+        })(req, res, next);
+
+    },
+    async (req, res) => {
+        
+        try {
+
+            if (!req.user) {
+                console.error('[Ion Callback] No user object from Ion strategy');
+                return res.redirect('/login?error=no_user_data');
+            }
+
+            let user = await User.findOne({ 
+                username: req.user.username 
+            });
+            
+            if (!user) {
+
+                const now = Date.now();
+                
+                user = new User({
+                    username: req.user.username,
+                    email: req.user.email,
+                    phoneNumber: 0,
+                    grade: req.user.grade,
+                    name: req.user.fullName || `${req.user.firstName} ${req.user.lastName}`,
+                    chats: [],
+                    schedule: { },
+                    settings: { },
+                    bio: "Student at Thomas Jefferson High School for Science and Technology",
+                    birthday: req.user.birthday
+                });
+                
+                await user.save();
+                
+                /*try {
+                    if (EmailService && EmailService.sendWelcomeEmail) {
+                        await EmailService.sendWelcomeEmail(
+                            user.email, 
+                            user.name,
+                            { grade: req.user.grade }
+                        );
+                    }
+                } catch (error) {
+                    console.error('[Ion Callback] Failed to send welcome email:', error.message);
+                }*/
+
+            } else {
+
+                user.lastLogin = Date.now();
+
+                if (req.user.grade) {
+                    user.settings = user.settings || {};
+                    user.settings.grade = req.user.grade;
+                }
+
+                await user.save();
+
+            }
+            
+            req.session.ionTokens = {
+                accessToken: req.user.accessToken,
+                refreshToken: req.user.refreshToken
+            };
+            
+            
+            req.logIn(user, (err) => {
+                if (err) {
+                    console.error('[Ion Callback] Login error:', err);
+                    return res.redirect('/login?error=login_failed');
+                }
+                                
+                req.session.save((err) => {
+                    if (err) {
+                        console.error('[Ion Callback] Session save error:', err);
+                    }
+                    
+                    const returnTo = req.session.returnTo || '/home';
+                    delete req.session.returnTo;
+
+                    res.redirect(returnTo);
+
+                });
+            });
+            
+        } catch (error) {
+            console.error('[Ion Callback] Error processing callback:', error);
+            res.redirect('/login?error=oauth_processing_failed');
+        }
+    }
+);
 
 app.get('/people/:username', async (req, res) => {
 

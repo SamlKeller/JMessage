@@ -1,5 +1,11 @@
 body{
-    background-image: url("/static/images/TJ-High.jpg");
+    background-image: url("/tjhsst.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    padding: 4px;
+    background-position: center;
+    image-rendering: pixelated;
 }
 
 #loginForm {
