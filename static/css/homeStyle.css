@@ -3,14 +3,21 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-    padding: 4px;
     background-position: center;
     image-rendering: pixelated;
+    overflow:hidden;
 }
 
 #loginForm {
     margin: auto;   
     background-color: white;
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    align-items:center;
+    justify-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    margin-left: 27.5%;
 }
 
 #pageContainer {
