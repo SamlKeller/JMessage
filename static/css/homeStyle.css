@@ -1,30 +1,7 @@
-body{
-    background-image: url("/tjhsst.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    background-position: center;
-    image-rendering: pixelated;
-    overflow:hidden;
-}
-
-#loginForm {
-    margin: auto;   
-    background-color: white;
-    padding: 10px;
-    padding-bottom: 20px;
-    border-radius: 10px;
-    align-items:center;
-    justify-items: center;
-    background: rgba(255, 255, 255, 0.85);
-    margin-left: 27.5%;
-}
-
 #pageContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
     width: 100%;
     margin: auto;
     position: absolute;
@@ -32,6 +9,41 @@ body{
     left: 0px;
     right: 0px;
     bottom: 0px;
+
+    background-image: url("/domeInside.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    image-rendering: pixelated;
+    overflow:hidden;
+    height: 100vh;
+}
+
+#loginForm {
+    width: 25%;
+    height: 40%;
+    margin: auto;   
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    border: 2px rgba(255, 255, 255, 0.7) solid;
+    box-shadow: 3px 3px 5px rgb(0, 0, 0, 0.5);
+    background-color: rgb(225, 225, 225, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+#alignProper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+}
+
+#loginTitle{
+    font-family: Elms Sans;
+    color: rgb(40, 40, 43);
 }
 
 #loginWithIon {
@@ -62,3 +74,11 @@ body{
     height: 25px;
     margin: auto 0px auto auto;
 }
+
+.elms-sans-ElSansFont {
+  font-family: "Elms Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
+}
+
