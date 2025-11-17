@@ -1,0 +1,21 @@
+#pageContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+#chatsSideBar{
+    display: flex;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    max-width: 100px;
+    height: 100vh;
+    border: 1px solid black;
+}
+
+#currMessage{
+    display: flex;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    border: 1px solid black;
+
+}

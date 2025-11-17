@@ -129,6 +129,42 @@ app.get('/home', Utils.ensureLogin, (req, res) => {
     });
 });
 
+app.post('/newChat', Utils.ensureLogin, async (req, res) => {
+
+    if (!req.body.chatUser) {
+        console.log("Error starting new chat: chat user not specified");
+    }
+
+    let otherUser = await findOtherUser(req.body.otherUser);
+
+    const chat = new Chat({
+        members: [req.user._id, otherUser._id],
+        createdAt: Date.now(),
+        media: [],
+        name: req.body?.chatName || null,
+        picture: null
+    });
+
+    chat.save();
+
+    console.log("New chat created");
+
+    return res.redirect('/home');
+
+});
+
+async function findOtherUser (id) {
+
+    const user = await User.findOne({ _id: id });
+
+    if (user) {
+        return user;
+    }
+
+    return null;
+
+}
+
 app.get('/search', async (req, res) => {
 
     if (req.query.search) {

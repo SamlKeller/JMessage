@@ -8,6 +8,19 @@
 <body>
     
     Welcome to JMessage!
+    <div id="pageContainer">
+        <div id="chatsSideBar"> 
+            <form id="newChat" action="/newChat" method="POST">
+                <input type="text" name="chatName" placeholder="Chat name">
+                <input type="text" name="chatUser" placeholder="Chat user">
+                <button type="submit" id="submitButton">Start chat</button>
+            </form>
+        </div>
+        <div id="currMessage">
+            
+        </div>
+    </div>
     
+    <script src="/chat.js"></script>
 </body>
 </html>
