@@ -123,11 +123,27 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/home', Utils.ensureLogin, (req, res) => {
+app.get('/home', Utils.ensureLogin, async (req, res) => {
+
+    const chats = await findChats(req.user.username);
+
     res.render('index', {
-        user: req.user
+        user: req.user,
+        chats: JSON.stringify(chats)
     });
 });
+
+async function findChats (username) {
+    
+    const results = await User.find({ items: username });
+
+    if (results) {
+        return results;
+    }
+
+    return [];
+
+}
 
 function toTitleCase(str) {
 
