@@ -129,16 +129,28 @@ app.get('/home', Utils.ensureLogin, (req, res) => {
     });
 });
 
+function toTitleCase(str) {
+
+    if (!str) {
+        return "";
+    }
+
+    return str.replace(
+        /\w\S*/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    );
+}
+
 app.post('/newChat', Utils.ensureLogin, async (req, res) => {
 
     if (!req.body.chatUser) {
         console.log("Error starting new chat: chat user not specified");
     }
 
-    let otherUser = await findOtherUser(req.body.otherUser);
+    let otherUser = await findOtherUser(toTitleCase(req.body.chatUser).trim());
 
     const chat = new Chat({
-        members: [req.user._id, otherUser._id],
+        members: [req.user.username, otherUser.username],
         createdAt: Date.now(),
         media: [],
         name: req.body?.chatName || null,
@@ -155,7 +167,7 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
 
 async function findOtherUser (id) {
 
-    const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ name: id });
 
     if (user) {
         return user;
