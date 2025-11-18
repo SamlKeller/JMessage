@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>JMessage Chats</title>
 </head>
 <body>
     <div id="pageContainer">
         <div id="chatsSideBar" class="backgroundSections"> 
-            <div id="userOptionsBar">
-                <img src = '/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
-                <img src = "/lightmodeIcon.png" alt="lightMode" id="lightModeIcon" onclick="turnLight()">
+            <div id="userOptionsBar" class="noselect">
+                <img src='/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
+                <img src="/lightmodeIcon.png" alt="lightMode" id="lightModeIcon" onclick="turnLight()">
             </div>
             <div id="formContainer">
                 <form id="newChat" action="/newChat" method="POST">
@@ -22,16 +25,12 @@
             </div>
             <div id="chatInsert"></div>
         </div>
-        <div id="currMessage" class="backgroundSections">
-            
-        </div>
+        <div id="currMessage" class="backgroundSections"></div>
     </div>
     <script>
 
         const chats = JSON.parse('<%-chats%>');
-
-        console.log("CHATSS");
-        console.log(chats);
+        const currentChat = document.getElementById("currMessage");
     
     </script>
     <script src="/chat.js"></script>

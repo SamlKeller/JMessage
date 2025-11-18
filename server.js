@@ -145,6 +145,26 @@ async function findChats (username) {
 
 }
 
+app.post('/chat/:id', Utils.ensureLogin, async (req, res) => {
+
+    const results = await Chat.find({ members: username });
+
+    for (let x = 0; x < results.length; x++) {
+
+        if (results[x].id == req.params.id) {
+
+            const messages = await Message.find({ chat: req.params.id });
+
+            return res.send(messages);
+
+        }
+
+    }
+
+    return res.send("Error: access denied");
+
+});
+
 function toTitleCase(str) {
 
     if (!str) {
