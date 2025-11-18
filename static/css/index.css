@@ -43,3 +43,9 @@ body{
     width: 40px;
     height: auto;
 }
+
+#lightModeIcon{
+    width: 40px;
+    height: auto;
+    display: none;
+}
