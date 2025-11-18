@@ -9,7 +9,6 @@ for (let x = 0; x < chats.length; x++) {
         <p>Chat ` + chats[x].name + `</p>
     `);
 
-}   
 }
 
 //Dark Mode Icon onclick
