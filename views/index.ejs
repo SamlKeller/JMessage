@@ -7,9 +7,11 @@
     <title>JMessage Chats</title>
 </head>
 <body>
-    Welcome to JMessage!
     <div id="pageContainer">
-        <div id="chatsSideBar"> 
+        <div id="chatsSideBar" class="backgroundSections"> 
+            <div id="userOptionsBar">
+                <img src = '/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
+            </div>
             <div id="formContainer">
                 <form id="newChat" action="/newChat" method="POST">
                     <input type="text" name="chatName" placeholder="Chat name">
@@ -18,10 +20,7 @@
                 </form>
             </div>
         </div>
-        <div id="chatInsert">
-
-        </div>
-        <div id="currMessage">
+        <div id="currMessage" class="backgroundSections">
             
         </div>
     </div>
