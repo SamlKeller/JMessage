@@ -19,6 +19,7 @@
                     <button type="submit" id="submitButton">Start chat</button>
                 </form>
             </div>
+            <div id="chatInsert"></div>
         </div>
         <div id="currMessage" class="backgroundSections">
             
@@ -26,8 +27,10 @@
     </div>
     <script>
 
-        const chatInsert = document.getElementById('chatInsert');
         const chats = JSON.parse('<%-chats%>');
+
+        console.log("CHATSS");
+        console.log(chats);
     
     </script>
     <script src="/chat.js"></script>

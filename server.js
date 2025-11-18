@@ -135,7 +135,7 @@ app.get('/home', Utils.ensureLogin, async (req, res) => {
 
 async function findChats (username) {
     
-    const results = await User.find({ items: username });
+    const results = await Chat.find({ members: username });
 
     if (results) {
         return results;

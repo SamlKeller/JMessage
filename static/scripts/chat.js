@@ -1,7 +1,8 @@
 console.log("Loaded chat.js");
 
-console.log("Chat length: " + chats.length);
 console.log(chats);
+
+const chatInsert = document.getElementById('chatInsert');
 
 for (let x = 0; x < chats.length; x++) {
 
