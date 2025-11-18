@@ -1,27 +1,45 @@
 body{
     overflow: hidden;
-    background-color: #242424;
+    background-color: #cccccc;
 }
 
 #pageContainer{
     display: flex;
     flex-direction: row;
+    height: 100%;
+}
+
+.backgroundSections{
+    background-color: #e5e5e5;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex-direction: column;
+    height: 95vh;
 }
 
 #chatsSideBar{
-    background-color: #363636;
-    display: flex;
-    border-radius: 10px;
-    min-width: 48%;
-    height: 100vh;
-    padding: 10px;
-    margin-right: 10px;
-    flex-direction: column;
+    width: 30%;
 }
 
 #currMessage{
+    width: 75%;
+}
+
+#userOptionsBar{
     display: flex;
-    border-radius: 10px;
-    min-width: 48%;
-    height: 100vh;
+    flex-direction: row;
+    margin: 5px;
+    border-radius: 7px;
+    min-height: 4%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#darkModeIcon{
+    width: 40px;
+    height: auto;
 }

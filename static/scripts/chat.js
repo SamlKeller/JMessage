@@ -10,3 +10,13 @@ for (let x = 0; x < chats.length; x++) {
     `);
 
 }
+
+//Dark Mode Icon onclick
+
+function turnDark(){
+    document.body.style.background = '#242424';
+    const elements = document.querySelectorAll('.backgroundSections'); 
+    Array.from(elements).forEach(element => {
+        element.style.background = '#363636';
+    });
+}
