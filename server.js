@@ -14,7 +14,10 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuid } from "uuid";
-import _ from 'lodash';
+
+//import _, { forEach } from 'lodash';
+import pkg from 'lodash';
+const  {_, forEach} = pkg;
 
 import Utils from './utils.js';
 import EmailService from './emailService.js';
@@ -212,6 +215,20 @@ async function findOtherUser (id) {
     return null;
 
 }
+
+app.post('/testSearch', async (req, res) => {
+    try{
+        let aggUsers = [];
+        await User.find({}, {name:1, _id:0})
+            .then(users => {
+                forEach(users, (user) => aggUsers.push(user['name']))
+            });
+        return res.send(aggUsers);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 
 app.get('/search', async (req, res) => {
 

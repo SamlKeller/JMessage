@@ -32,6 +32,17 @@ function enterChat (id) {
 
 }
 
+async function getNames () {
+    try{ 
+        const response = await fetch('/testSearch', {
+            method: 'POST' 
+        });
+        const result = await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 //Dark Mode Icon onclick
 
 function turnDark () {
