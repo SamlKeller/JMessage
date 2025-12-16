@@ -1,6 +1,5 @@
-console.log("Loaded chat.js");
-
-console.log(chats);
+//console.log("Loaded chat.js");
+//console.log(chats);
 
 const chatInsert = document.getElementById('chatInsert');
 
@@ -22,12 +21,12 @@ for (let x = 0; x < chats.length; x++) {
 
 function enterChat (id) {
 
-    console.log("Entering chat");
+    //console.log("Entering chat");
 
     currentChat.innerHTML = id;
 
     fetch('/chat/' + id, function (err, response) {
-        console.log(response);
+        //console.log(response);
     });
 
 }
@@ -38,9 +37,37 @@ async function getNames () {
             method: 'POST' 
         });
         const result = await response.json();
-        console.log(result);
+        return result
     } catch (err) {
         console.log(err);
+    }
+    return 0 
+}
+
+async function filterUsers(){
+    const names = getNames();
+
+}
+
+
+populteOptions();
+
+async function populteOptions(){
+    const choiceSections = document.querySelector("#userSearchBox");
+    let userChoices = await getNames();
+
+    if (userChoices){
+        let userCounter = 5;
+        userChoices.forEach((user) => { 
+            if (userCounter){
+                choiceSections.insertAdjacentHTML("afterbegin",`
+                    <div class="usersShown">
+                        <p class="userNamesDisplay">` + user + `</p>
+                    </div>
+                `);
+            }
+            userCounter--; 
+        });
     }
 }
 
