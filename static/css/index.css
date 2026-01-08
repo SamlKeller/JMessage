@@ -88,6 +88,7 @@ body {
     background-color: white;
     outline: 1px solid grey;
     border-radius: 6px;
+    position: relative;
 }
 
 .leftChatContent {
@@ -128,7 +129,7 @@ body {
     top: 2px;
 }
 
-#userSearchBox{
+#userSearchBox {
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -138,35 +139,35 @@ body {
     padding: 15px;
 }
 
-#holdUserLookup{
+#holdUserLookup {
     display: flex;
     flex-direction: column;
 }
 
-#formInputs{
+#formInputs {
     display: flex;
     flex-direction: row;
     height: 25px;
 }
 
-#chatNameInput{
+#chatNameInput {
     width: 40%;
     height: 20px;
 }
 
-#userNameInput{
+#userNameInput {
     margin-left: 5px;
     width: 100%;
     min-height: 20px;
 }
 
-#submitButton{
+#submitButton {
     width: 15%;
     height: 25px;
     margin-left: 20px;
 }
 
-.usersShown{
+.usersShown {
     background-color: rgb(204, 204, 204, 0.5);
     outline: 1px solid black;
     text-align: center;
@@ -174,5 +175,30 @@ body {
 }
 
 .expandedButton {
+    margin: auto;
+    align-items: center;
     display: none;
+    position: absolute;
+    flex-direction: column;
+    background-color: white;
+    right: 0px;
+    top: 50px;
+    width: 150px;
+    border-radius: 4px;
+    border: 1px solid rgb(194, 194, 194);
+    height: 75px;
+}
+
+.expandedButton button {
+    width: 100%;
+    position: relative;
+    background: none;
+    border: none;
+    outline: none;
+    height: 250px;
+    margin: auto;
+}
+
+.expandedButton button:hover {
+    background-color: rgb(189, 189, 189);
 }
