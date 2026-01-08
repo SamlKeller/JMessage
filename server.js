@@ -211,7 +211,7 @@ async function findOtherUser (id) {
 
     return null;
 
-}
+}   
 
 app.get('/search', async (req, res) => {
 
