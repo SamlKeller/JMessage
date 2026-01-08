@@ -197,7 +197,13 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
         chats: 0
     });
 
+    const message = new Message({
+        chat: chat.id,
+        fill: 0
+    });
+
     chat.save();
+    message.save();
 
     console.log("New chat created");
 
@@ -220,22 +226,99 @@ app.post('/deleteChat/:id', Utils.ensureLogin, async (req, res) => {
     } else {
 
         return res.json({
-            status: 401
+            status: '401'
         });
 
     }
 
 });
 
-app.get('/chat/:id', Utils.ensureLogin, async (req, res) => {
+app.post('/leaveChat/:id', Utils.ensureLogin, async (req, res) => {
+    
+    const chat = await Chat.findOne({ id: req.params.id });
+
+    if (chat && chat?.members.includes(req.user.username)) {
+
+        let newMembers = chat.members;
+        
+        newMembers.splice(newMembers.indexOf(req.user.username), 1);
+
+        await Chat.updateOne({ id: req.params.id }, {
+            members: newMembers
+        });
+
+        return res.json({
+            status: '200'
+        });
+
+    } else {
+
+        return res.json({
+            status: '401'
+        });
+
+    }
+
+});
+
+
+app.post('/markChatAsUnread/:id', Utils.ensureLogin, async (req, res) => {
+    
+    const chat = await Chat.findOne({ id: req.params.id });
+
+    if (chat && chat?.members.includes(req.user.username)) {
+
+        if (chat.read.includes(req.user.username)) {
+            
+            let newRead = chat.read;
+
+            newRead.splice(newRead.indexOf(req.user.username), 1);
+
+            await Chat.updateOne({ id: req.params.id }, {
+                read: newRead
+            });
+
+            res.json({
+                status: "200"
+            });
+
+        } else {
+            console.log("Error: user trying to mark unread chat as unread");
+            return res.json({
+                status: "400"
+            });
+        }
+
+    } else {
+
+        return res.json({
+            status: '401'
+        });
+
+    }
+
+});
+
+app.post('/chat/:id', Utils.ensureLogin, async (req, res) => {
 
     const chat = Chat.findOne({ id: req.params.id });
 
     if (chat) {
         if (chat.members.includes(req.user.username)) {
 
+            const messages = await Message.findOne({ chat: req.params.id, index: Math.floor(chat.chats) + 1});
+
+            return res.json({
+                messages: messages,
+                status: "200"
+            });
         }
     }
+
+    return res.json({
+        messages: [],
+        status: "400"
+    });
 
 });
 

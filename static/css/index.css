@@ -200,10 +200,10 @@ body {
     background-color: white;
     right: 0px;
     top: 50px;
-    width: 150px;
+    width: 160px;
     border-radius: 4px;
     border: 1px solid rgb(194, 194, 194);
-    height: 75px;
+    height: 125px;
 }
 
 .expandedButton button {
@@ -218,4 +218,5 @@ body {
 
 .expandedButton button:hover {
     background-color: rgb(189, 189, 189);
+    cursor: pointer;
 }

@@ -27,7 +27,15 @@ const chatSchema = new Schema({
     chats: {
         type: Number,
         required: true
+    },
+    read: {
+        type: Array,
+        required: true
     }
 });
 
 export default mongoose.model('Chat', chatSchema);
+
+
+
+

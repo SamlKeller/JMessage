@@ -15,12 +15,44 @@ for (let x = 0; x < chats.length; x++) {
                 <img src="/messageOptions.svg" class="messageOptionsIcon">
             </button>
             <div class="expandedButton">
-                <button class="unreadButton" onclick="markAsUnread(` + chats[x]._id.trim() + `)">Mark as unread</button>
-                <button class="leaveButton" onclick="leaveButton(` + chats[x]._id.trim() + `)">Leave chat</button>
-                <button class="deleteButton" onclick="deleteChat(` + chats[x]._id.trim() + `)">Delete chat</button>
+                <button class="unreadButton" onclick="markAsUnread(event, ` + chats[x]._id.trim() + `)">Mark as unread</button>
+                <button class="leaveButton" onclick="leaveButton(event, ` + chats[x]._id.trim() + `)">Leave chat</button>
+                <button class="deleteButton" onclick="deleteChat(event, ` + chats[x]._id.trim() + `)">Delete chat</button>
             </div>
         </div>
     `);
+
+}
+
+function deleteChat (e, id) {
+
+    e.stopPropagation();
+
+    console.log("Deleting chat");
+
+    fetch('/deleteChat/' + id, {method: 'POST'}, function (err, response) {
+        console.log(response);
+    });
+
+}
+
+function markAsUnread (e, id) {
+  
+    e.stopPropagation();
+
+    fetch('/markChatAsUnread/' + id, {method: 'POST'}, function (err, response) {
+        console.log(response);
+    });
+
+}
+
+function leaveChat (e, id) {
+
+    e.stopPropagation();
+    
+    fetch('/leaveChat/' + id, {method: 'POST'}, function (err, response) {
+        console.log(response);
+    });
 
 }
 
@@ -36,12 +68,12 @@ function expandButton (doc) {
 
 function enterChat (id) {
 
-    //console.log("Entering chat");
+    console.log("Entering chat");
 
     currentChat.innerHTML = id;
 
     fetch('/chat/' + id, function (err, response) {
-        //console.log(response);
+        console.log(response);
     });
 
 }

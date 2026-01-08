@@ -13,6 +13,10 @@ const msgSchema = new Schema({
     messages: {
         type: Array,
         required: true
+    },
+    index: {
+        type: Number,
+        required: true
     }
 });
 
