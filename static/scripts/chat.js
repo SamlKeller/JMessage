@@ -59,6 +59,17 @@ async function getNames () {
     return 0 
 }
 
+async function filterUsers(){
+    const fillBox = document.querySelector('#userNameInput');
+    const backg = document.querySelector('#ghostText')
+    let currInput = fillBox.value;
+    const names = getNames().then( names => {
+            let updatedArr = names.filter(name => name.startsWith(currInput));
+            backg.textContent = updatedArr[0];
+        }
+    );
+}
+
 //Dark Mode Icon onclick
 
 function turnDark () {
