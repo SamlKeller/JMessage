@@ -20,10 +20,9 @@
                 <form id="newChat" action="/newChat" method="POST">
                     <div id="formInputs">
                         <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
-                        <div id="holdUserLookup">
+                        <div id="inputWrapper">
                             <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" onkeyup="filterUsers()">
-                            <div id="userSearchBox">
-                            </div>
+                            <div id="ghostText"></div>
                         </div>
                         <button type="submit" id="submitButton">Start chat</button>
                     </div>
