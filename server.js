@@ -193,7 +193,8 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
         createdAt: Date.now(),
         media: [],
         name: req.body?.chatName || null,
-        picture: null
+        picture: null,
+        chats: 0
     });
 
     chat.save();
@@ -201,6 +202,40 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
     console.log("New chat created");
 
     return res.redirect('/home');
+
+});
+
+app.post('/deleteChat/:id', Utils.ensureLogin, async (req, res) => {
+    
+    const chat = await Chat.findOne({ id: req.params.id });
+
+    if (chat && chat?.members.includes(req.user.username)) {
+
+        await Chat.deleteOne({ id: req.params.id });
+
+        return res.json({
+            status: '200'
+        });
+
+    } else {
+
+        return res.json({
+            status: 401
+        });
+
+    }
+
+});
+
+app.get('/chat/:id', Utils.ensureLogin, async (req, res) => {
+
+    const chat = Chat.findOne({ id: req.params.id });
+
+    if (chat) {
+        if (chat.members.includes(req.user.username)) {
+
+        }
+    }
 
 });
 
@@ -408,7 +443,8 @@ app.get('/auth/ion/callback',
                     schedule: { },
                     settings: { },
                     bio: "Student at Thomas Jefferson High School for Science and Technology",
-                    birthday: req.user.birthday
+                    birthday: req.user.birthday,
+                    online: "online"
                 });
                 
                 await user.save();

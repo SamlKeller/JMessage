@@ -189,3 +189,7 @@ body {
     text-align: center;
     margin-bottom: 5px;
 }
+
+.expandedButton {
+    display: none;
+}

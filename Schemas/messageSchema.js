@@ -6,23 +6,13 @@ const msgSchema = new Schema({
         type: String,
         required: true
     },
-    to: {
-        type: String,
+    fill: {
+        type: Number,
         required: true
     },
-    from: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    media: {
+    messages: {
         type: Array,
-        required: false,
-        default: []
+        required: true
     }
 });
 

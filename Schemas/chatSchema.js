@@ -23,6 +23,10 @@ const chatSchema = new Schema({
     picture: {
         type: String,
         required: false
+    },
+    chats: {
+        type: Number,
+        required: true
     }
 });
 

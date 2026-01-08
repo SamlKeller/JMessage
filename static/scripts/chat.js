@@ -11,11 +11,26 @@ for (let x = 0; x < chats.length; x++) {
                 <img src="/defaultPicture.svg" class="defaultPic">
                 <p class="chatName">` + chats[x].name + `</p>
             </div>
-            <button class="optionsButton">
+            <button class="optionsButton" onclick="expandButton(this)">
                 <img src="/messageOptions.svg" class="messageOptionsIcon">
             </button>
+            <div class="expandedButton">
+                <button class="unreadButton" onclick="markAsUnread(` + chats[x]._id.trim() + `)">Mark as unread</button>
+                <button class="leaveButton" onclick="leaveButton(` + chats[x]._id.trim() + `)">Leave chat</button>
+                <button class="deleteButton" onclick="deleteChat(` + chats[x]._id.trim() + `)">Delete chat</button>
+            </div>
         </div>
     `);
+
+}
+
+function expandButton (doc) {
+
+    if (doc.parentElement.querySelector('.expandedButton').style.display == 'flex') {
+        doc.parentElement.querySelector('.expandedButton').style.setProperty('display', 'none', 'important');
+    } else {
+        doc.parentElement.querySelector('.expandedButton').style.setProperty('display', 'flex', 'important');
+    }
 
 }
 
@@ -42,17 +57,6 @@ async function getNames () {
         console.log(err);
     }
     return 0 
-}
-
-async function filterUsers(){
-    const fillBox = document.querySelector('#userNameInput');
-    const backg = document.querySelector('#ghostText')
-    let currInput = fillBox.value;
-    const names = getNames().then( names => {
-            let updatedArr = names.filter(name => name.startsWith(currInput));
-            backg.textContent = updatedArr[0];
-        }
-    );
 }
 
 //Dark Mode Icon onclick

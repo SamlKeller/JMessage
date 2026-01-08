@@ -48,6 +48,10 @@ const userSchema = new Schema({
     birthday: {
         type: Date,
         required: true
+    },
+    online: {
+        type: String,
+        required: true
     }
 });
 
