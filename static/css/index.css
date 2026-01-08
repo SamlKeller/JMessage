@@ -138,11 +138,6 @@ body {
     padding: 15px;
 }
 
-#holdUserLookup{
-    display: flex;
-    flex-direction: column;
-}
-
 #formInputs{
     display: flex;
     flex-direction: row;
@@ -154,10 +149,32 @@ body {
     height: 20px;
 }
 
+#inputWrapper{
+    position: relative;
+    width: 100%;
+}
+
 #userNameInput{
     margin-left: 5px;
-    width: 100%;
     min-height: 20px;
+    width: 100%;
+    position: relative;
+    background: transparent;
+    z-index: 2;
+}
+
+#ghostText{
+    margin-left: 5px;
+    width: 102%;
+    min-height: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #aaaaaa;
+    background-color: white;
+    z-index: 1;
+    pointer-events: none;
+    white-space: pre;
 }
 
 #submitButton{

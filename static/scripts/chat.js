@@ -45,30 +45,14 @@ async function getNames () {
 }
 
 async function filterUsers(){
-    const names = getNames();
-
-}
-
-
-populteOptions();
-
-async function populteOptions(){
-    const choiceSections = document.querySelector("#userSearchBox");
-    let userChoices = await getNames();
-
-    if (userChoices){
-        let userCounter = 5;
-        userChoices.forEach((user) => { 
-            if (userCounter){
-                choiceSections.insertAdjacentHTML("afterbegin",`
-                    <div class="usersShown">
-                        <p class="userNamesDisplay">` + user + `</p>
-                    </div>
-                `);
-            }
-            userCounter--; 
-        });
-    }
+    const fillBox = document.querySelector('#userNameInput');
+    const backg = document.querySelector('#ghostText')
+    let currInput = fillBox.value;
+    const names = getNames().then( names => {
+            let updatedArr = names.filter(name => name.startsWith(currInput));
+            backg.textContent = updatedArr[0];
+        }
+    );
 }
 
 //Dark Mode Icon onclick
