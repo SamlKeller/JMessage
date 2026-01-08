@@ -9,23 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>JMessage Chats</title>
 </head>
-<body>
+<body>  
     <div id="pageContainer">
         <div id="chatsSideBar" class="backgroundSections"> 
             <div id="userOptionsBar" class="noselect">
                 <img src='/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
                 <img src="/lightmodeIcon.png" alt="lightMode" id="lightModeIcon" onclick="turnLight()">
-            </div>
+             </div>
             <div id="formContainer">
                 <form id="newChat" action="/newChat" method="POST">
-                    <input type="text" name="chatName" placeholder="Chat name">
-                    <input type="text" name="chatUser" placeholder="Chat user">
-                    <button type="submit" id="submitButton">Start chat</button>
+                    <div id="formInputs">
+                        <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
+                        <div id="holdUserLookup">
+                            <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" onkeyup="filterUsers()">
+                            <div id="userSearchBox">
+                            </div>
+                        </div>
+                        <button type="submit" id="submitButton">Start chat</button>
+                    </div>
                 </form>
             </div>
             <div id="chatInsert"></div>
         </div>
-        <div id="currMessage" class="backgroundSections"></div>
+        <div id="currMessage" class="backgroundSections">
+            <div id="chatSendContainer">
+                
+            </div>
+        </div>
     </div>
     <script>
 
