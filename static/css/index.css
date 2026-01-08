@@ -164,6 +164,7 @@ body {
 }
 
 #ghostText{
+    padding: 6px;
     margin-left: 5px;
     width: 102%;
     min-height: 25px;
