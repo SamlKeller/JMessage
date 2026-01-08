@@ -63,11 +63,17 @@ async function filterUsers(){
     const fillBox = document.querySelector('#userNameInput');
     const backg = document.querySelector('#ghostText')
     let currInput = fillBox.value;
-    const names = getNames().then( names => {
-            let updatedArr = names.filter(name => name.startsWith(currInput));
-            backg.textContent = updatedArr[0];
-        }
-    );
+
+    if (fillBox.value == ""){
+        backg.textContent = "";
+    } else {
+
+        const names = getNames().then( names => {
+                let updatedArr = names.filter(name => name.startsWith(currInput));
+                backg.textContent = updatedArr[0];
+            }
+        );
+    }
 }
 
 //Dark Mode Icon onclick
