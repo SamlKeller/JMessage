@@ -125,16 +125,6 @@ body {
     top: 2px;
 }
 
-#userSearchBox {
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: 15px;
-    margin-top: 5px;
-    background-color: rgb(204, 204, 204, 0.5);
-    padding: 15px;
-}
-
 #formInputs {
     display: flex;
     flex-direction: row;
@@ -144,6 +134,8 @@ body {
 #chatNameInput {
     width: 40%;
     height: 20px;
+    border: 1px solid black;
+    padding: 5px;
 }
 
 #inputWrapper{
@@ -155,25 +147,26 @@ body {
     padding: 5px;
 
     margin-left: 5px;
-    min-height: 20px;
+    height: 20px;
     width: 100%;
     position: relative;
     background: transparent;
     z-index: 2;
-    border: none;
+    border: 1px solid black;
     outline: none;
 
     font-size: 14px;
 }
 
 #ghostText{
-    padding: 5px;
+    padding: 6px;
     margin-top: 2px;
 
     margin-left: 5px;
     width: 100%;
-    min-height: 20px;
+    height: 20px;
     position: absolute;
+
     top: 0;
     left: 0;
     color: #aaaaaa;
@@ -211,6 +204,8 @@ body {
     border-radius: 4px;
     border: 1px solid rgb(194, 194, 194);
     height: 125px;
+
+    z-index: 1;
 }
 
 .expandedButton button {
