@@ -12,27 +12,58 @@
 <body>  
     <div id="pageContainer">
         <div id="chatsSideBar" class="backgroundSections"> 
-            <div id="userOptionsBar" class="noselect">
-                <img src='/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
-                <img src="/lightmodeIcon.png" alt="lightMode" id="lightModeIcon" onclick="turnLight()">
-             </div>
-            <div id="formContainer">
-                <form id="newChat" action="/newChat" method="POST">
-                    <div id="formInputs">
-                        <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
-                        <div id="inputWrapper">
-                            <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" onkeyup="filterUsers()">
-                            <div id="ghostText"></div>
+            <div id="sideBarContainer">
+                <div id="userOptionsBar" class="noselect">
+                    <img src='/darkmodeIcon.png' alt="darkMode" id="darkModeIcon" onclick="turnDark()">
+                    <img src="/lightmodeIcon.png" alt="lightMode" id="lightModeIcon" onclick="turnLight()">
+                </div>
+                <div id="formContainer">
+                    <form id="newChat" action="/newChat" method="POST">
+                        <div id="formInputs">
+                            <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
+                            <div id="inputWrapper">
+                                <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" onkeyup="filterUsers()">
+                                <div id="ghostText"></div>
+                            </div>
+                            <button type="submit" id="submitButton"><img src="/add.svg" id="addImage"></button>
                         </div>
-                        <button type="submit" id="submitButton">Start chat</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div id="chatInsert"></div>
             </div>
-            <div id="chatInsert"></div>
         </div>
         <div id="currMessage" class="backgroundSections">
+            <div id="topMessageHeader">
+                <p id="topChatName">Loading...</p>
+            </div>
+            <div id="messages">
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+                </div>
+                <div class="theirMessage msg">
+                    <p class="theirMessageP msgp">This is my message</p>
+                </div>
+                <div class="theirMessage msg">
+                    <p class="theirMessageP msgp">This is my message</p>
+                </div>
+                <div class="theirMessage msg">
+                    <p class="theirMessageP msgp">This is my message</p>
+                </div>
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+                </div>
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+                </div>
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+                </div>
+            </div>
             <div id="chatSendContainer">
-                
+                <form id="sendMessageBar" action="/sendMessage" method="POST">
+                    <input type="text" placeholder="Send a message" id="sendMessageInput">
+                    <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
+                </form>
             </div>
         </div>
     </div>
@@ -40,7 +71,10 @@
 
         const chats = JSON.parse('<%-chats%>');
         const currentChat = document.getElementById("currMessage");
-    
+        const chatSendContainer = document.getElementById('chatSendContainer');
+        const messageSend = document.getElementById("sendMessageBar");
+        const messageInput = document.getElementById("sendMessageInput");
+
     </script>
     <script src="/chat.js"></script>
 </body>

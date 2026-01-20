@@ -66,17 +66,33 @@ function expandButton (doc) {
 
 }
 
+
 function enterChat (id) {
 
     console.log("Entering chat");
 
-    currentChat.innerHTML = id;
+    chatSendContainer.innerHTML = `
+        <div id="sendMessageBar">
+            <input type="text" placeholder="Send a message to ` + id + `" id="sendMessageInput">
+            <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
+        </div>
+    `;
 
     fetch('/chat/' + id, function (err, response) {
         console.log(response);
     });
 
 }
+
+messageSend.addEventListener('submit', function (evt) {
+
+    evt.preventDefault();
+
+    messageInput.value = "";
+
+    console.log("Submitted");
+
+});
 
 async function getNames () {
     try{ 
