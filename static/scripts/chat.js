@@ -107,9 +107,16 @@ async function getNames () {
     return 0 
 }
 
-async function filterUsers(){
-    const fillBox = document.querySelector('#userNameInput');
-    const backg = document.querySelector('#ghostText')
+const fillBox = document.querySelector('#userNameInput');
+
+fillBox.addEventListener('keydown', function(e){
+    if (e.key === 'Tab'){
+        e.preventDefault();
+    }
+});
+
+fillBox.addEventListener('keyup', async function(event){
+    const backg = document.querySelector('#ghostText');
     let currInput = fillBox.value;
 
     if (fillBox.value == ""){
@@ -117,12 +124,16 @@ async function filterUsers(){
     } else {
 
         const names = getNames().then( names => {
-                let updatedArr = names.filter(name => name.startsWith(currInput));
-                backg.textContent = updatedArr[0];
+                let updatedArr = names.filter(name => name.toLowerCase().startsWith(currInput.toLowerCase()));
+                if (event.key === 'Tab'){
+                    fillBox.value = updatedArr[0];
+                } else {
+                    backg.textContent = currInput + updatedArr[0].slice(currInput.length);
+                }
             }
         );
     }
-}
+});
 
 //Dark Mode Icon onclick
 
