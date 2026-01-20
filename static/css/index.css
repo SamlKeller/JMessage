@@ -168,7 +168,7 @@ body {
 #ghostText {
     padding: 6px;
     margin-top: 2px;
-    margin-left: 5px;
+    margin-left: 6px;
     width: 100%;
     height: 20px;
     position: absolute;
@@ -184,10 +184,18 @@ body {
     font-size: 14px;
 }
 
-#submitButton{
-    width: 25%;
-    height: 25px;
+#submitButton {
+    width: 50px;
+    height: 32px;
     margin-left: 20px;
+    background-color: rgb(62, 62, 255);
+    border: none;
+    outline: none;
+}
+
+#addImage {
+    position: relative;
+    top: 2px;
 }
 
 .usersShown {
