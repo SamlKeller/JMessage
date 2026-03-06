@@ -31,6 +31,10 @@ const chatSchema = new Schema({
     read: {
         type: Array,
         required: true
+    },
+    messageIds:{
+        type: String,
+        required: true
     }
 });
 

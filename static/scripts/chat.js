@@ -98,7 +98,7 @@ async function getNames () {
     try{ 
         const response = await fetch('/testSearch', {
             method: 'POST' 
-        });
+        }); 
         const result = await response.json();
         return result
     } catch (err) {
@@ -116,7 +116,7 @@ fillBox.addEventListener('keydown', function(e){
 });
 
 fillBox.addEventListener('keyup', async function(event){
-    const backg = document.querySelector('#ghostText');
+    const backg = document.querySelector('#ghostText'); 
     let currInput = fillBox.value;
 
     if (fillBox.value == ""){
@@ -159,7 +159,7 @@ function turnLight () {
     const lightIcon = document.querySelector('#lightModeIcon');
 
     document.body.style.background = '#cccccc';
-    const elements = document.querySelectorAll('.backgroundSections'); 
+    const elements = document.querySelectorAll('.backgroundSections');  
     
     Array.from(elements).forEach(element => {
         element.style.background = '#e5e5e5';
