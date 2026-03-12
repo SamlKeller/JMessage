@@ -15,9 +15,8 @@ import multerS3 from "multer-s3";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuid } from "uuid";
 
-//import _, { forEach } from 'lodash';
-import pkg, { chunk } from 'lodash';
-const  {_, forEach} = pkg;
+import pkg from 'lodash';
+const { chunk } = pkg;
 
 import Utils from './utils.js';
 import EmailService from './emailService.js';

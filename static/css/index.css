@@ -94,6 +94,12 @@ body {
     outline: 1px solid grey;
     border-radius: 6px;
     position: relative;
+    transition-duration: 0.2s;
+}
+
+.chatButton:hover {
+    cursor: pointer;
+    background-color: rgb(242, 242, 242);
 }
 
 .leftChatContent {

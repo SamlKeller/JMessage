@@ -27,7 +27,7 @@
     "express": "^5.1.0",
     "express-flash": "github:RGBboy/express-flash",
     "express-session": "^1.18.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "mongoose": "^8.18.1",
     "multer": "^2.0.2",
     "multer-s3": "^3.0.1",

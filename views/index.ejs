@@ -36,37 +36,23 @@
             <div id="topMessageHeader">
                 <p id="topChatName">Loading...</p>
             </div>
-            <div id="messages">
-                <div class="myMessage msg">
-                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-                </div>
-                <div class="theirMessage msg">
-                    <p class="theirMessageP msgp">This is my message</p>
-                </div>
-                <div class="theirMessage msg">
-                    <p class="theirMessageP msgp">This is my message</p>
-                </div>
-                <div class="theirMessage msg">
-                    <p class="theirMessageP msgp">This is my message</p>
-                </div>
-                <div class="myMessage msg">
-                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-                </div>
-                <div class="myMessage msg">
-                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-                </div>
-                <div class="myMessage msg">
-                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-                </div>
-            </div>
+            <div id="messages"></div>
             <div id="chatSendContainer">
-                <form id="sendMessageBar" action="/sendMessage/<>" method="POST">
+                <form id="sendMessageBar" action="/sendMessage/" method="POST">
                     <input type="text" placeholder="Send a message" id="sendMessageInput" name="msg">
                     <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
                 </form>
             </div>
         </div>
     </div>
+    <!--
+                    <div class="myMessage msg">
+                    <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+                </div>
+                <div class="theirMessage msg">
+                    <p class="theirMessageP msgp">This is my message</p>
+                </div>
+    -->
     <script>
 
         const chats = JSON.parse('<%-chats%>');

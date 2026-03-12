@@ -3,10 +3,12 @@
 
 const chatInsert = document.getElementById('chatInsert');
 
+console.log(chats);
+
 for (let x = 0; x < chats.length; x++) {
 
     chatInsert.insertAdjacentHTML('afterbegin', `
-        <div class="chatButton" onclick="enterChat('` + chats[x]._id.trim() + `')">
+        <div class="chatButton" onclick="enterChat('`+chats[x].name.trim()+`', '`+chats[x]._id.trim()+`')">
             <div class="leftChatContent">
                 <img src="/defaultPicture.svg" class="defaultPic">
                 <p class="chatName">` + chats[x].name + `</p>
@@ -67,13 +69,13 @@ function expandButton (doc) {
 }
 
 
-function enterChat (id) {
+function enterChat (name, id) {
 
     console.log("Entering chat");
 
     chatSendContainer.innerHTML = `
         <div id="sendMessageBar">
-            <input type="text" placeholder="Send a message to ` + id + `" id="sendMessageInput">
+            <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput">
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
         </div>
     `;
