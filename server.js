@@ -320,8 +320,7 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
 
     const chat = await Chat.findOne({ id: req.params.chatId});
     if (!chat?.members.includes(req.user.username)){
-        return res.json({status: '401'});
-    }
+        return res.json({status: '401'});}
 
     const currChunk = await Message.findOneById({id: chat.messageIds[-1]});
 
