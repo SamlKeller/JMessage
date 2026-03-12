@@ -16,7 +16,7 @@ import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuid } from "uuid";
 
 //import _, { forEach } from 'lodash';
-import pkg from 'lodash';
+import pkg, { chunk } from 'lodash';
 const  {_, forEach} = pkg;
 
 import Utils from './utils.js';
@@ -197,13 +197,7 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
         chats: 0
     });
 
-    const message = new Message({
-        chat: chat.id,
-        fill: 0
-    });
-
     chat.save();
-    message.save();
 
     console.log("New chat created");
 
@@ -320,6 +314,39 @@ app.post('/chat/:id', Utils.ensureLogin, async (req, res) => {
         status: "400"
     });
 
+});
+
+app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
+
+    const chat = await Chat.findOne({ id: req.params.chatId});
+    if (!chat?.members.includes(req.user.username)){
+        return res.json({status: '401'});}
+
+    const currChunk = await Message.findOneById({id: chat.messageIds[-1]});
+
+    const newMsg = {
+        sender: req.user.username, 
+        text: req.body.msg,
+        timeSent: new Date()
+    };
+
+    if (currChunk || currChunk.fill >= 50){
+        const newIndex = currChunk ? currChunk.index + 1 : 0;
+
+        const newChunk = new Message({
+            fill: 1,
+            messages: [newMsg],
+            index: newIndex
+        });
+        
+        await newChunk.save();
+        
+    } else {
+        currChunk.messages.push(newMsg);
+        currChunk.fill += 1;
+
+        await currChunk.save();
+    }
 });
 
 async function findOtherUser (id) {
