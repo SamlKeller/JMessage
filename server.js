@@ -241,7 +241,7 @@ app.post('/leaveChat/:id', Utils.ensureLogin, async (req, res) => {
 
         let newMembers = chat.members;
         
-        newMembers.splice(newMembers.indexOf(req.user.username), 1);
+        newMembers.splice(newMembers.indexOf(req.user.username), 1);    
 
         await Chat.updateOne({ id: req.params.id }, {
             members: newMembers
