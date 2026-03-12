@@ -1,5 +1,5 @@
 //console.log("Loaded chat.js");
-//console.log(chats);
+console.log(chats);
 
 const chatInsert = document.getElementById('chatInsert');
 
@@ -66,6 +66,7 @@ function expandButton (doc) {
 
 }
 
+let universalID = null;
 
 function enterChat (id) {
 
@@ -78,6 +79,8 @@ function enterChat (id) {
         </div>
     `;
 
+    universalID = id;
+
     fetch('/chat/' + id, function (err, response) {
         console.log(response);
     });
@@ -88,10 +91,14 @@ messageSend.addEventListener('submit', function (evt) {
 
     evt.preventDefault();
 
-    messageInput.value = "";
+    fetch('/chat/' + universalId, {
+        method: "POST",
+        body: JSON.stringify({
+            msg:  document.getElementById("sendMessageInput").value
+        })
+    });
 
     console.log("Submitted");
-
 });
 
 async function getNames () {

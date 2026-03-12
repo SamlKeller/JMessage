@@ -16,7 +16,9 @@ import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuid } from "uuid";
 
 //import _, { forEach } from 'lodash';
-import pkg, { chunk } from 'lodash';
+import pkg from 'lodash';
+const { chunk } = pkg;
+
 const  {_, forEach} = pkg;
 
 import Utils from './utils.js';
