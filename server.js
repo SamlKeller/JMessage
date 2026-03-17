@@ -292,26 +292,32 @@ app.post('/markChatAsUnread/:id', Utils.ensureLogin, async (req, res) => {
 
 });
 
-app.post('/chat/:id', Utils.ensureLogin, async (req, res) => {
+app.get('/chat/:id', Utils.ensureLogin, async (req, res) => {
 
-    const chat = Chat.findOne({ id: req.params.id });
+    try{ 
+        const chat = await Chat.findById(req.params.id);
 
-    if (chat) {
-        if (chat.members.includes(req.user.username)) {
+        if (chat) {
+            if (chat.members.includes(req.user.username)) {
 
-            const messages = await Message.findOne({ chat: req.params.id, index: Math.floor(chat.chats) + 1});
+                const messages = await Message.findOne({ chat: chat._id }).sort({ index: -1 });
 
-            return res.json({
-                messages: messages,
-                status: "200"
-            });
+                return res.json({
+                    messages: messages,
+                    status: "200"
+                });
+            }
         }
-    }
 
-    return res.json({
-        messages: [],
-        status: "400"
-    });
+        return res.json({
+            messages: [],
+            status: "400"
+        }); 
+        
+    } catch (err) {
+        console.error("Error fetching chat:", err);
+        return res.status(500).json({ messages: [], status: "500", error: err.message });
+    }
 
 });
 
@@ -321,7 +327,7 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
     if (!chat?.members.includes(req.user.username)){
         return res.json({status: '401'});}
 
-    const currChunk = await Message.findOneById({id: chat.messageIds[-1]});
+    const currChunk = await Message.findById({id: chat.messageIds[chat.messageIds.length - 1]});
 
     const newMsg = {
         sender: req.user.username, 
