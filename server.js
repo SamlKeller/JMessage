@@ -323,35 +323,88 @@ app.get('/chat/:id', Utils.ensureLogin, async (req, res) => {
 
 app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
 
-    const chat = await Chat.findOne({ id: req.params.chatId});
-    if (!chat?.members.includes(req.user.username)){
-        return res.json({status: '401'});}
+    const chat = await Chat.findById(req.params.chatId);
+    
+    if (!chat?.members.includes(req.user.username)) {
 
-    const currChunk = await Message.findById({id: chat.messageIds[chat.messageIds.length - 1]});
+        console.log("Not sending message, chat doesnt include user");
 
-    const newMsg = {
-        sender: req.user.username, 
-        text: req.body.msg,
-        timeSent: new Date()
-    };
+        return res.json({status: '401'});
+    
+    }
 
-    if (currChunk || currChunk.fill >= 50){
-        const newIndex = currChunk ? currChunk.index + 1 : 0;
+    console.log(chat);
+
+    console.log("Logging body");
+
+    console.log(req.body);
+    console.log(req.body.msg);
+
+    if (chat.messageIds?.length == 0) {
+
+        const newMsg = {
+            sender: req.user.username, 
+            text: req.body.msg,
+            timeSent: new Date()
+        };
 
         const newChunk = new Message({
             fill: 1,
             messages: [newMsg],
-            index: newIndex
+            index: 0
         });
-        
-        await newChunk.save();
-        
-    } else {
-        currChunk.messages.push(newMsg);
-        currChunk.fill += 1;
 
-        await currChunk.save();
+        let tempIds = chat.messageIds;
+
+        tempIds.push(newChunk._id);
+
+        await Chat.findOneAndUpdate({ _id: req.params.chatId }, {
+            messageIds: tempIds
+        });
+
+        await newChunk.save();
+
+    } else {
+
+        const currChunk = await Message.findById(chat.messageIds[chat.messageIds.length - 1]);
+
+        const newMsg = {
+            sender: req.user.username, 
+            text: req.body.msg,
+            timeSent: new Date()
+        };
+
+        if (!currChunk || currChunk.fill >= 50){
+
+            const newIndex = currChunk ? currChunk.index + 1 : 0;
+
+            const newChunk = new Message({
+                fill: 1,
+                messages: [newMsg],
+                index: newIndex
+            });
+
+            let tempIds = chat.messageIds;
+
+            tempIds.push(newChunk._id);
+
+            await newChunk.save();
+
+            await Chat.findOneAndUpdate({ _id: req.params.chatId }, {
+                messageIds: tempIds
+            });
+            
+        } else {
+
+            currChunk.messages.push(newMsg);
+            currChunk.fill += 1;
+
+            await currChunk.save();
+        
+        }
+
     }
+
 });
 
 async function findOtherUser (id) {
@@ -371,7 +424,9 @@ app.post('/testSearch', async (req, res) => {
         let aggUsers = [];
         await User.find({}, {name:1, _id:0})
             .then(users => {
-                forEach(users, (user) => aggUsers.push(user['name']))
+                users.forEach(user => {
+                    aggUsers.push(user.name);
+                });
             });
         return res.send(aggUsers);
     } catch (err) {

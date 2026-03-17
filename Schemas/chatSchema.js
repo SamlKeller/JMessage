@@ -33,7 +33,7 @@ const chatSchema = new Schema({
         required: true
     },
     messageIds:{
-        type: String,
+        type: Array,
         required: true
     }
 });

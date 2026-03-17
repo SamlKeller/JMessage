@@ -2,8 +2,6 @@
 
 const chatInsert = document.getElementById('chatInsert');
 
-let universalID = "FILLER";
-
 for (let x = 0; x < chats.length; x++) {
 
     chatInsert.insertAdjacentHTML('afterbegin', `
@@ -69,16 +67,36 @@ function expandButton (doc) {
 
 async function enterChat (name, id) {
 
-    console.log("Entering chat");
+    console.log("Entering chat " + id);
 
     chatSendContainer.innerHTML = `
         <form id="sendMessageBar">
-            <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput">
+            <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput" name="msg">
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
         </form>
     `;
 
-    universalID = id;
+    document.getElementById("sendMessageBar").addEventListener('submit', function (evt) {
+
+        console.log("Message send has been pressed");
+        console.log(messageInput.value);
+
+        const valueOfMessage = document.getElementById("sendMessageInput").value;
+
+        evt.preventDefault();
+
+        fetch('/sendMessage/' + id, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                msg: valueOfMessage
+            })
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            messageInput.value = ""; 
+        }).catch(err => console.error(err));
+
+    });
 
     try {
         const res = await fetch('/chat/' + id);
@@ -88,29 +106,6 @@ async function enterChat (name, id) {
         console.error("Error fetching chat:", err);
     }
 }
-
-messageSend.addEventListener('submit', function (evt) {
-
-    console.log("Message send has been pressed");
-    console.log(messageInput.value);
-
-    evt.preventDefault();
-
-    fetch('/sendMessage/' + universalID, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            msg:  messageInput.value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        messageInput.value = ""; 
-    })
-    .catch(err => console.error(err));
-
-});
 
 async function getNames () {
     try{ 
