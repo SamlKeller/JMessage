@@ -78,10 +78,7 @@ async function enterChat (name, id) {
 
     document.getElementById("sendMessageBar").addEventListener('submit', function (evt) {
 
-        console.log("Message send has been pressed");
-        console.log(messageInput.value);
-
-        const valueOfMessage = document.getElementById("sendMessageInput").value;
+        const messageBox = document.getElementById("sendMessageInput");
 
         evt.preventDefault();
 
@@ -89,11 +86,12 @@ async function enterChat (name, id) {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                msg: valueOfMessage
+                msg: messageBox.value
             })
         }).then(res => res.json()).then(data => {
-            console.log(data);
-            messageInput.value = ""; 
+
+            messageBox.value = ""; 
+
         }).catch(err => console.error(err));
 
     });
