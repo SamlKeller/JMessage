@@ -69,12 +69,66 @@ async function enterChat (name, id) {
 
     console.log("Entering chat " + id);
 
+    topChatName.innerHTML = name;
+
     chatSendContainer.innerHTML = `
         <form id="sendMessageBar">
             <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput" name="msg">
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
         </form>
     `;
+
+
+    /*
+    
+        <!--
+        <div class="myMessage msg">
+            <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+        </div>
+        <div class="theirMessage msg">
+            <p class="theirMessageP msgp">This is my message</p>
+        </div>
+    -->
+    
+    */
+
+    fetch('/getChat/' + id, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+    }).then(res => res.json()).then(data => {
+
+        console.log(data);
+
+        const parsedData = data;
+
+        for (let x = 0; x < parsedData.messages.length; x++) {
+
+            if (parsedData[x].sender == user.username) {
+
+                messageInsert.insertAdjacentHTML('beforeend', `
+                
+                    <div class="myMessage msg">
+                        <p class="myMessageP msgp">` + parsedData.messages[x].msg + `</p>
+                    </div>
+                    
+                `);
+
+            } else {
+
+                messageInsert.insertAdjacentHTML('beforeend', `
+                
+                    <div class="theirMessage msg">
+                        <p class="theirMessageP msgp">` + parsedData.messages[x].msg + `</p>
+                    </div>
+                    
+                `);
+
+            }
+
+        }
+
+    }).catch(err => console.error(err));
+
 
     document.getElementById("sendMessageBar").addEventListener('submit', function (evt) {
 

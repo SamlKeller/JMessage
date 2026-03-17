@@ -130,7 +130,7 @@ app.get('/home', Utils.ensureLogin, async (req, res) => {
     const chats = await findChats(req.user.username);
 
     res.render('index', {
-        user: req.user,
+        user: JSON.stringify(req.user),
         chats: JSON.stringify(chats)
     });
 });
@@ -146,26 +146,6 @@ async function findChats (username) {
     return [];
 
 }
-
-app.post('/chat/:id', Utils.ensureLogin, async (req, res) => {
-
-    const results = await Chat.find({ members: username });
-
-    for (let x = 0; x < results.length; x++) {
-
-        if (results[x].id == req.params.id) {
-
-            const messages = await Message.find({ chat: req.params.id });
-
-            return res.send(messages);
-
-        }
-
-    }
-
-    return res.send("Error: access denied");
-
-});
 
 function toTitleCase(str) {
 
@@ -431,6 +411,27 @@ app.post('/testSearch', async (req, res) => {
     }
 });
 
+app.post('/getChat/:id', async (req, res) => {
+
+    const chat = await Chat.findById(req.params.id);
+
+    if (chat && chat?.members.includes(req.user.username)) {
+    
+        res.send({
+            status: 200,
+            messages: await Message.findById(chat.messageIds[chat.messageIds.length - 1])
+        });
+
+    } else {
+
+        res.send({
+            status: 400,
+            messages: []
+        });
+        
+    }
+
+});
 
 app.get('/search', async (req, res) => {
 
