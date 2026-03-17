@@ -38,7 +38,7 @@
             </div>
             <div id="messages"></div>
             <div id="chatSendContainer">
-                <form id="sendMessageBar">
+                <form id="sendMessageBar" action="/submitMessage" method="POST">
                     <input type="text" placeholder="Send a message" id="sendMessageInput" name="msg">
                     <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
                 </form>

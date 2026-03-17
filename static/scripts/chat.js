@@ -4,7 +4,6 @@ const chatInsert = document.getElementById('chatInsert');
 
 let universalID = "FILLER";
 
-
 for (let x = 0; x < chats.length; x++) {
 
     chatInsert.insertAdjacentHTML('afterbegin', `
@@ -73,10 +72,10 @@ async function enterChat (name, id) {
     console.log("Entering chat");
 
     chatSendContainer.innerHTML = `
-        <div id="sendMessageBar">
+        <form id="sendMessageBar">
             <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput">
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
-        </div>
+        </form>
     `;
 
     universalID = id;
@@ -91,11 +90,13 @@ async function enterChat (name, id) {
 }
 
 messageSend.addEventListener('submit', function (evt) {
-    console.log("pressed");
+
+    console.log("Message send has been pressed");
+    console.log(messageInput.value);
 
     evt.preventDefault();
 
-    fetch('/sendMessage/' + universalId, {
+    fetch('/sendMessage/' + universalID, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
