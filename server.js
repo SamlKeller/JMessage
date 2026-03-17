@@ -333,13 +333,6 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
     
     }
 
-    console.log(chat);
-
-    console.log("Logging body");
-
-    console.log(req.body);
-    console.log(req.body.msg);
-
     if (chat.messageIds?.length == 0) {
 
         const newMsg = {
@@ -404,6 +397,10 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
         }
 
     }
+
+    res.json({
+        status: 200
+    });
 
 });
 

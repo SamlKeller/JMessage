@@ -90,6 +90,8 @@ async function enterChat (name, id) {
             })
         }).then(res => res.json()).then(data => {
 
+            console.log("Sent");
+
             messageBox.value = ""; 
 
         }).catch(err => console.error(err));
