@@ -101,9 +101,9 @@ async function enterChat (name, id) {
     try {
         const res = await fetch('/chat/' + id);
         const data = await res.json();
-        console.log("Entered chat", data);
+        console.log(data);
     } catch (err) {
-        console.error("Error fetching chat:", err);
+        console.error(err);
     }
 }
 
