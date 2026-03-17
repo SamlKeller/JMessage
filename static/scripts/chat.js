@@ -1,9 +1,9 @@
 //console.log("Loaded chat.js");
-console.log(chats);
 
 const chatInsert = document.getElementById('chatInsert');
 
-console.log(chats);
+let universalID = "FILLER";
+
 
 for (let x = 0; x < chats.length; x++) {
 
@@ -67,8 +67,6 @@ function expandButton (doc) {
     }
 
 }
-
-let universalID = null;
 
 function enterChat (name, id) {
 
