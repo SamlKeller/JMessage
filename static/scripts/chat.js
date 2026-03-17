@@ -1,9 +1,9 @@
 //console.log("Loaded chat.js");
-console.log(chats);
 
 const chatInsert = document.getElementById('chatInsert');
 
-console.log(chats);
+let universalID = "FILLER";
+
 
 for (let x = 0; x < chats.length; x++) {
 
@@ -68,9 +68,7 @@ function expandButton (doc) {
 
 }
 
-let universalID = null;
-
-function enterChat (name, id) {
+async function enterChat (name, id) {
 
     console.log("Entering chat");
 
@@ -83,24 +81,34 @@ function enterChat (name, id) {
 
     universalID = id;
 
-    fetch('/chat/' + id, function (err, response) {
-        console.log(response);
-    });
-
+    try {
+        const res = await fetch('/chat/' + id);
+        const data = await res.json();
+        console.log("Entered chat", data);
+    } catch (err) {
+        console.error("Error fetching chat:", err);
+    }
 }
 
 messageSend.addEventListener('submit', function (evt) {
+    console.log("pressed");
 
     evt.preventDefault();
 
-    fetch('/chat/' + universalId, {
+    fetch('/sendMessage/' + universalId, {
         method: "POST",
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            msg:  document.getElementById("sendMessageInput").value
+            msg:  messageInput.value
         })
-    });
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        messageInput.value = ""; 
+    })
+    .catch(err => console.error(err));
 
-    console.log("Submitted");
 });
 
 async function getNames () {
