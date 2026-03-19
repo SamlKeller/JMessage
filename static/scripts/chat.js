@@ -97,18 +97,24 @@ async function enterChat (name, id) {
         headers: {"Content-Type": "application/json"}
     }).then(res => res.json()).then(data => {
 
+        
+        const parsedData = data.messages;
+
         console.log(data);
-
-        const parsedData = data;
-
+        console.log(parsedData);
+        console.log(parsedData.messages);
+        console.log(parsedData.messages.length);
+        
         for (let x = 0; x < parsedData.messages.length; x++) {
 
-            if (parsedData[x].sender == user.username) {
+            console.log("Iterating parsed messages " + x);
+
+            if (parsedData.messages[x].sender == user.username) {
 
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="myMessage msg">
-                        <p class="myMessageP msgp">` + parsedData.messages[x].msg + `</p>
+                        <p class="myMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
                 `);
@@ -118,7 +124,7 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="theirMessage msg">
-                        <p class="theirMessageP msgp">` + parsedData.messages[x].msg + `</p>
+                        <p class="theirMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
                 `);
@@ -126,6 +132,8 @@ async function enterChat (name, id) {
             }
 
         }
+
+        messageInsert.scrollTop = messageInsert.scrollHeight;
 
     }).catch(err => console.error(err));
 
@@ -146,19 +154,23 @@ async function enterChat (name, id) {
 
             console.log("Sent");
 
+            let messageValue = messageBox.value;
             messageBox.value = ""; 
+
+            messageInsert.insertAdjacentHTML('beforeend', `
+        
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">` + messageValue + `</p>
+                </div>
+                        
+            `);
+
+            messageInsert.scrollTop = messageInsert.scrollHeight;
 
         }).catch(err => console.error(err));
 
     });
 
-    try {
-        const res = await fetch('/chat/' + id);
-        const data = await res.json();
-        console.log("Entered chat", data);
-    } catch (err) {
-        console.error("Error fetching chat:", err);
-    }
 }
 
 async function getNames () {
