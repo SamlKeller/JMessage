@@ -22,7 +22,7 @@ for (let x = 0; x < chats.length; x++) {
     `);
 
 }
-//enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
+enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
 function deleteChat (e, id) {
 
@@ -100,6 +100,7 @@ async function enterChat (name, id) {
 
         
         const parsedData = data.messages;
+        messageInsert.innerHTML = ""; 
 
         console.log(data);
         console.log(parsedData);
