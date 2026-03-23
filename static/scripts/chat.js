@@ -69,12 +69,74 @@ async function enterChat (name, id) {
 
     console.log("Entering chat " + id);
 
+    topChatName.innerHTML = name;
+
     chatSendContainer.innerHTML = `
         <form id="sendMessageBar">
             <input type="text" placeholder="Send a message to ` + name + `" id="sendMessageInput" name="msg">
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
         </form>
     `;
+
+
+    /*
+    
+        <!--
+        <div class="myMessage msg">
+            <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
+        </div>
+        <div class="theirMessage msg">
+            <p class="theirMessageP msgp">This is my message</p>
+        </div>
+    -->
+    
+    */
+
+    fetch('/getChat/' + id, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+    }).then(res => res.json()).then(data => {
+
+        
+        const parsedData = data.messages;
+
+        console.log(data);
+        console.log(parsedData);
+        console.log(parsedData.messages);
+        console.log(parsedData.messages.length);
+        
+        for (let x = 0; x < parsedData.messages.length; x++) {
+
+            console.log("Iterating parsed messages " + x);
+
+            if (parsedData.messages[x].sender == user.username) {
+
+                messageInsert.insertAdjacentHTML('beforeend', `
+                
+                    <div class="myMessage msg">
+                        <p class="myMessageP msgp">` + parsedData.messages[x].text + `</p>
+                    </div>
+                    
+                `);
+
+            } else {
+
+                messageInsert.insertAdjacentHTML('beforeend', `
+                
+                    <div class="theirMessage msg">
+                        <p class="theirMessageP msgp">` + parsedData.messages[x].text + `</p>
+                    </div>
+                    
+                `);
+
+            }
+
+        }
+
+        messageInsert.scrollTop = messageInsert.scrollHeight;
+
+    }).catch(err => console.error(err));
+
 
     document.getElementById("sendMessageBar").addEventListener('submit', function (evt) {
 
@@ -92,12 +154,24 @@ async function enterChat (name, id) {
 
             console.log("Sent");
 
+            let messageValue = messageBox.value;
             messageBox.value = ""; 
+
+            messageInsert.insertAdjacentHTML('beforeend', `
+        
+                <div class="myMessage msg">
+                    <p class="myMessageP msgp">` + messageValue + `</p>
+                </div>
+                        
+            `);
+
+            messageInsert.scrollTop = messageInsert.scrollHeight;
 
         }).catch(err => console.error(err));
 
     });
 
+<<<<<<< HEAD
     try {
         const res = await fetch('/chat/' + id);
         const data = await res.json();
@@ -105,6 +179,8 @@ async function enterChat (name, id) {
     } catch (err) {
         console.error(err);
     }
+=======
+>>>>>>> 44fb5b66e2e3f592660a72a2b7c09ef5f66d34ee
 }
 
 async function getNames () {

@@ -45,20 +45,15 @@
             </div>
         </div>  
     </div>
-    <!--
-        <div class="myMessage msg">
-            <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-        </div>
-        <div class="theirMessage msg">
-            <p class="theirMessageP msgp">This is my message</p>
-        </div>
-    -->
     <script>
 
         const chats = JSON.parse('<%-chats%>');
+        const user = JSON.parse('<%-user%>');
         const currentChat = document.getElementById("currMessage");
         const chatSendContainer = document.getElementById('chatSendContainer');
         const messageSend = document.getElementById("sendMessageBar");
+        const topChatName = document.getElementById("topChatName");
+        const messageInsert = document.getElementById("messages");
         const messageInput = document.getElementById("sendMessageInput");
 
     </script>
