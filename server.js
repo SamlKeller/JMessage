@@ -167,13 +167,22 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
 
     let otherUser = await findOtherUser(toTitleCase(req.body.chatUser).trim());
 
+    const newChunk = new Message({
+        fill: 0,
+        messages: [],
+        index: 0
+    });
+
+    await newChunk.save();
+
     const chat = new Chat({
         members: [req.user.username, otherUser.username],
         createdAt: Date.now(),
         media: [],
         name: req.body?.chatName || null,
         picture: null,
-        chats: 0
+        chats: 0, 
+        messageIds: [newChunk._id]
     });
 
     chat.save();
@@ -313,69 +322,40 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
     
     }
 
-    if (chat.messageIds?.length == 0) {
+    const currChunk = await Message.findById(chat.messageIds[chat.messageIds.length - 1]);
 
-        const newMsg = {
-            sender: req.user.username, 
-            text: req.body.msg,
-            timeSent: new Date()
-        };
+    const newMsg = {
+        sender: req.user.username, 
+        text: req.body.msg,
+        timeSent: new Date()
+    };
+
+    if (!currChunk || currChunk.fill >= 50){
+
+        const newIndex = currChunk ? currChunk.index + 1 : 0;
 
         const newChunk = new Message({
             fill: 1,
             messages: [newMsg],
-            index: 0
+            index: newIndex
         });
 
         let tempIds = chat.messageIds;
 
         tempIds.push(newChunk._id);
 
+        await newChunk.save();
+
         await Chat.findOneAndUpdate({ _id: req.params.chatId }, {
             messageIds: tempIds
         });
-
-        await newChunk.save();
-
+        
     } else {
 
-        const currChunk = await Message.findById(chat.messageIds[chat.messageIds.length - 1]);
+        currChunk.messages.push(newMsg);
+        currChunk.fill += 1;
 
-        const newMsg = {
-            sender: req.user.username, 
-            text: req.body.msg,
-            timeSent: new Date()
-        };
-
-        if (!currChunk || currChunk.fill >= 50){
-
-            const newIndex = currChunk ? currChunk.index + 1 : 0;
-
-            const newChunk = new Message({
-                fill: 1,
-                messages: [newMsg],
-                index: newIndex
-            });
-
-            let tempIds = chat.messageIds;
-
-            tempIds.push(newChunk._id);
-
-            await newChunk.save();
-
-            await Chat.findOneAndUpdate({ _id: req.params.chatId }, {
-                messageIds: tempIds
-            });
-            
-        } else {
-
-            currChunk.messages.push(newMsg);
-            currChunk.fill += 1;
-
-            await currChunk.save();
-        
-        }
-
+        await currChunk.save();
     }
 
     res.json({

@@ -22,6 +22,7 @@ for (let x = 0; x < chats.length; x++) {
     `);
 
 }
+//enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
 function deleteChat (e, id) {
 
@@ -141,46 +142,37 @@ async function enterChat (name, id) {
     document.getElementById("sendMessageBar").addEventListener('submit', function (evt) {
 
         const messageBox = document.getElementById("sendMessageInput");
-
         evt.preventDefault();
 
-        fetch('/sendMessage/' + id, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                msg: messageBox.value
-            })
-        }).then(res => res.json()).then(data => {
+        if (!messageBox.value == ""){
 
-            console.log("Sent");
+            fetch('/sendMessage/' + id, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    msg: messageBox.value
+                })
+            }).then(res => res.json()).then(data => {
 
-            let messageValue = messageBox.value;
-            messageBox.value = ""; 
+                console.log("Sent");
 
-            messageInsert.insertAdjacentHTML('beforeend', `
-        
-                <div class="myMessage msg">
-                    <p class="myMessageP msgp">` + messageValue + `</p>
-                </div>
-                        
-            `);
+                let messageValue = messageBox.value;
+                messageBox.value = ""; 
 
-            messageInsert.scrollTop = messageInsert.scrollHeight;
+                messageInsert.insertAdjacentHTML('beforeend', `
+            
+                    <div class="myMessage msg">
+                        <p class="myMessageP msgp">` + messageValue + `</p>
+                    </div>
+                            
+                `);
 
-        }).catch(err => console.error(err));
+                messageInsert.scrollTop = messageInsert.scrollHeight;
 
+            }).catch(err => console.error(err));
+        }
     });
 
-<<<<<<< HEAD
-    try {
-        const res = await fetch('/chat/' + id);
-        const data = await res.json();
-        console.log(data);
-    } catch (err) {
-        console.error(err);
-    }
-=======
->>>>>>> 44fb5b66e2e3f592660a72a2b7c09ef5f66d34ee
 }
 
 async function getNames () {
