@@ -5,7 +5,7 @@ const chatInsert = document.getElementById('chatInsert');
 for (let x = 0; x < chats.length; x++) {
 
     chatInsert.insertAdjacentHTML('afterbegin', `
-        <div class="chatButton" onclick="enterChat('`+chats[x].name.trim()+`', '`+chats[x]._id.trim()+`')">
+        <div class="chatButton" onclick="enterChat('`+chats[x].name.trim()+`', '`+ chats[x]._id.trim() +`')">
             <div class="leftChatContent">
                 <img src="/defaultPicture.svg" class="defaultPic">
                 <p class="chatName">` + chats[x].name + `</p>
@@ -15,8 +15,7 @@ for (let x = 0; x < chats.length; x++) {
             </button>
             <div class="expandedButton">
                 <button class="unreadButton" onclick="markAsUnread(event, ` + chats[x]._id.trim() + `)">Mark as unread</button>
-                <button class="leaveButton" onclick="leaveButton(event, ` + chats[x]._id.trim() + `)">Leave chat</button>
-                <button class="deleteButton" onclick="deleteChat(event, ` + chats[x]._id.trim() + `)">Delete chat</button>
+                <button class="leaveButton" onclick="leaveChat(event, '` + chats[x]._id.trim() + `')">Leave chat</button>
             </div>
         </div>
     `);
@@ -24,17 +23,17 @@ for (let x = 0; x < chats.length; x++) {
 }
 enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
-function deleteChat (e, id) {
+// function deleteChat (e, id) {
 
-    e.stopPropagation();
+//     e.stopPropagation();
 
-    console.log("Deleting chat");
+//     console.log("Deleting chat");
 
-    fetch('/deleteChat/' + id, {method: 'POST'}, function (err, response) {
-        console.log(response);
-    });
+//     fetch('/deleteChat/' + id, {method: 'POST'}, function (err, response) {
+//         console.log(response);
+//     });
 
-}
+// }
 
 function markAsUnread (e, id) {
   
@@ -46,14 +45,16 @@ function markAsUnread (e, id) {
 
 }
 
-function leaveChat (e, id) {
-
+function leaveChat (e, chatId) {
+    console.log(chatId);
     e.stopPropagation();
     
-    fetch('/leaveChat/' + id, {method: 'POST'}, function (err, response) {
-        console.log(response);
+    fetch('/leaveChat/' + chatId, {
+        method: 'POST'
+    }).then(res => res.json()).then( data => {
+        if (data.status === '200') {
+            location.reload();}
     });
-
 }
 
 function expandButton (doc) {
@@ -68,8 +69,6 @@ function expandButton (doc) {
 
 async function enterChat (name, id) {
 
-    console.log("Entering chat " + id);
-
     topChatName.innerHTML = name;
 
     chatSendContainer.innerHTML = `
@@ -79,9 +78,7 @@ async function enterChat (name, id) {
         </form>
     `;
 
-
     /*
-    
         <!--
         <div class="myMessage msg">
             <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
@@ -90,7 +87,6 @@ async function enterChat (name, id) {
             <p class="theirMessageP msgp">This is my message</p>
         </div>
     -->
-    
     */
 
     fetch('/getChat/' + id, {
@@ -101,15 +97,8 @@ async function enterChat (name, id) {
         
         const parsedData = data.messages;
         messageInsert.innerHTML = ""; 
-
-        console.log(data);
-        console.log(parsedData);
-        console.log(parsedData.messages);
-        console.log(parsedData.messages.length);
         
         for (let x = 0; x < parsedData.messages.length; x++) {
-
-            console.log("Iterating parsed messages " + x);
 
             if (parsedData.messages[x].sender == user.username) {
 
@@ -216,38 +205,3 @@ fillBox.addEventListener('keyup', async function(event){
         );
     }
 });
-
-//Dark Mode Icon onclick
-
-function turnDark () {
-    const darkIcon = document.querySelector('#darkModeIcon');
-    const lightIcon = document.querySelector('#lightModeIcon');
-
-    document.body.style.background = '#242424';
-    const elements = document.querySelectorAll('.backgroundSections'); 
-    
-    Array.from(elements).forEach(element => {
-        element.style.background = '#363636';
-    });
-
-    darkIcon.style.display = 'none';
-    lightIcon.style.display = 'flex';
-
-}
-
-function turnLight () {
-    
-    const darkIcon = document.querySelector('#darkModeIcon');
-    const lightIcon = document.querySelector('#lightModeIcon');
-
-    document.body.style.background = '#cccccc';
-    const elements = document.querySelectorAll('.backgroundSections');  
-    
-    Array.from(elements).forEach(element => {
-        element.style.background = '#e5e5e5';
-    });
-
-    darkIcon.style.display = 'flex';
-    lightIcon.style.display = 'none';
-
-}

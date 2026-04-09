@@ -193,54 +193,47 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
 
 });
 
-app.post('/deleteChat/:id', Utils.ensureLogin, async (req, res) => {
+// app.post('/deleteChat/:id', Utils.ensureLogin, async (req, res) => {
     
-    const chat = await Chat.findOne({ id: req.params.id });
+//     const chat = await Chat.findOne({ id: req.params.id });
 
-    if (chat && chat?.members.includes(req.user.username)) {
+//     if (chat && chat?.members.includes(req.user.username)) {
 
-        await Chat.deleteOne({ id: req.params.id });
+//         await Chat.deleteOne({ id: req.params.id });
 
-        return res.json({
-            status: '200'
-        });
+//         return res.json({
+//             status: '200'
+//         });
 
-    } else {
+//     } else {
 
-        return res.json({
-            status: '401'
-        });
+//         return res.json({
+//             status: '401'
+//         });
 
+//     }
+
+// });
+
+app.post('/leaveChat/:chatId', Utils.ensureLogin, async (req, res) => {
+
+    const chat = await Chat.findById(req.params.chatId);
+
+    if (!chat) {
+        console.log("Chat does not exist");
+        return res.json({status: '401'});
     }
 
-});
-
-app.post('/leaveChat/:id', Utils.ensureLogin, async (req, res) => {
-    
-    const chat = await Chat.findOne({ id: req.params.id });
-
-    if (chat && chat?.members.includes(req.user.username)) {
-
-        let newMembers = chat.members;
-        
-        newMembers.splice(newMembers.indexOf(req.user.username), 1);    
-
-        await Chat.updateOne({ id: req.params.id }, {
-            members: newMembers
-        });
-
-        return res.json({
-            status: '200'
-        });
-
-    } else {
-
-        return res.json({
-            status: '401'
-        });
-
+    if (!chat?.members.includes(req.user.username)) {
+        console.log("User not in chat");
+        return res.json({status: '401'});
     }
 
+    let newMembers = chat.members;
+    newMembers.splice(newMembers.indexOf(req.user.username), 1);   
+
+    const result = await Chat.updateOne({ _id: req.params.chatId },  {members: newMembers});
+    return res.json({status: '200'});
 });
 
 
