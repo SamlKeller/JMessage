@@ -23,18 +23,6 @@ for (let x = 0; x < chats.length; x++) {
 }
 enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
-// function deleteChat (e, id) {
-
-//     e.stopPropagation();
-
-//     console.log("Deleting chat");
-
-//     fetch('/deleteChat/' + id, {method: 'POST'}, function (err, response) {
-//         console.log(response);
-//     });
-
-// }
-
 function markAsUnread (e, id) {
   
     e.stopPropagation();
@@ -76,17 +64,6 @@ async function enterChat (name, id) {
             <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
         </form>
     `;
-
-    /*
-        <!--
-        <div class="myMessage msg">
-            <p class="myMessageP msgp">Thisadshdasuidasuidasiu is my message</p>
-        </div>
-        <div class="theirMessage msg">
-            <p class="theirMessageP msgp">This is my message</p>
-        </div>
-    -->
-    */
 
     fetch('/getChat/' + id, {
         method: "POST",
