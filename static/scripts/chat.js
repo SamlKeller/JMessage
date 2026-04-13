@@ -68,7 +68,6 @@ function expandButton (doc) {
 }
 
 async function enterChat (name, id) {
-
     topChatName.innerHTML = name;
 
     chatSendContainer.innerHTML = `
@@ -105,6 +104,7 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="myMessage msg">
+                        <p class="myMessageName" msgp>` + parsedData.messages[x].sender + `</p>
                         <p class="myMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
@@ -115,6 +115,7 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="theirMessage msg">
+                        <p class="theirMessageName" msgp>` + parsedData.messages[x].sender + `</p>
                         <p class="theirMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
@@ -152,6 +153,7 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
             
                     <div class="myMessage msg">
+                        <p class="myMessageName" msgp>` + user.username + `</p>
                         <p class="myMessageP msgp">` + messageValue + `</p>
                     </div>
                             
@@ -162,7 +164,6 @@ async function enterChat (name, id) {
             }).catch(err => console.error(err));
         }
     });
-
 }
 
 async function getNames () {

@@ -342,11 +342,25 @@ body {
     background-color: #888888;
 }
 
+.myMessageName{
+    justify-content: flex-end;
+    margin: 4px 0px 0px auto;
+    text-align: right;
+    padding: 0px 12px 0px 8px;
+}
+
 .myMessage {
     justify-content: flex-end;
     margin: 4px 0px 0px auto;
     text-align: right;
     padding: 0px 12px 0px 8px;
+}
+
+.theirMessageName{
+    justify-content: flex-start;
+    margin: 4px 0px 0px 0px;
+    text-align: left;
+    padding: 0px 8px 0px 12px;
 }
 
 .theirMessage {
@@ -358,10 +372,4 @@ body {
 
 .msgp {
     margin: auto;
-}
-
-.myMessageP {
-}
-
-.theirMessageP {
 }

@@ -229,10 +229,16 @@ app.post('/leaveChat/:chatId', Utils.ensureLogin, async (req, res) => {
         return res.json({status: '401'});
     }
 
-    let newMembers = chat.members;
+    let newMembers = [...chat.members];
     newMembers.splice(newMembers.indexOf(req.user.username), 1);   
 
-    const result = await Chat.updateOne({ _id: req.params.chatId },  {members: newMembers});
+    if (newMembers.length === 0){
+        await Chat.deleteOne({ _id: req.params.chatId });
+        await Message.deleteMany({ _id: {$in: chat.messageIds}})
+    } else {
+        await Chat.updateOne({ _id: req.params.chatId },  {members: newMembers});
+    }
+
     return res.json({status: '200'});
 });
 
@@ -589,18 +595,6 @@ app.get('/auth/ion/callback',
                 });
                 
                 await user.save();
-                
-                /*try {
-                    if (EmailService && EmailService.sendWelcomeEmail) {
-                        await EmailService.sendWelcomeEmail(
-                            user.email, 
-                            user.name,
-                            { grade: req.user.grade }
-                        );
-                    }
-                } catch (error) {
-                    console.error('[Ion Callback] Failed to send welcome email:', error.message);
-                }*/
 
             } else {
 
