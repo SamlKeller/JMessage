@@ -69,7 +69,6 @@ async function enterChat (name, id) {
         method: "POST",
         headers: {"Content-Type": "application/json"}
     }).then(res => res.json()).then(data => {
-
         
         const parsedData = data.messages;
         messageInsert.innerHTML = ""; 
@@ -81,7 +80,6 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="myMessage msg">
-                        <p class="myMessageName" msgp>` + parsedData.messages[x].sender + `</p>
                         <p class="myMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
@@ -92,7 +90,7 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
                     <div class="theirMessage msg">
-                        <p class="theirMessageName" msgp>` + parsedData.messages[x].sender + `</p>
+                        <p class="theirMessageName" msgp>` + parsedData.messages[x].senderName + `</p>
                         <p class="theirMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
@@ -130,7 +128,6 @@ async function enterChat (name, id) {
                 messageInsert.insertAdjacentHTML('beforeend', `
             
                     <div class="myMessage msg">
-                        <p class="myMessageName" msgp>` + user.username + `</p>
                         <p class="myMessageP msgp">` + messageValue + `</p>
                     </div>
                             

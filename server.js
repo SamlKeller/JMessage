@@ -193,28 +193,6 @@ app.post('/newChat', Utils.ensureLogin, async (req, res) => {
 
 });
 
-// app.post('/deleteChat/:id', Utils.ensureLogin, async (req, res) => {
-    
-//     const chat = await Chat.findOne({ id: req.params.id });
-
-//     if (chat && chat?.members.includes(req.user.username)) {
-
-//         await Chat.deleteOne({ id: req.params.id });
-
-//         return res.json({
-//             status: '200'
-//         });
-
-//     } else {
-
-//         return res.json({
-//             status: '401'
-//         });
-
-//     }
-
-// });
-
 app.post('/leaveChat/:chatId', Utils.ensureLogin, async (req, res) => {
 
     const chat = await Chat.findById(req.params.chatId);
@@ -325,6 +303,7 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
 
     const newMsg = {
         sender: req.user.username, 
+        senderName: req.user.name,
         text: req.body.msg,
         timeSent: new Date()
     };
@@ -372,7 +351,7 @@ async function findOtherUser (id) {
     }
 
     return null;
-
+    
 }   
 
 app.post('/testSearch', async (req, res) => {
