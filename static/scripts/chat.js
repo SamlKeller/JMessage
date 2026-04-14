@@ -159,7 +159,7 @@ fillBox.addEventListener('keydown', function(e){
     if (e.key === 'Tab'){
         e.preventDefault();
     }
-});
+});     
 
 fillBox.addEventListener('keyup', async function(event){
     const backg = document.querySelector('#ghostText'); 
