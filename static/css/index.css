@@ -349,18 +349,17 @@ body {
     padding: 0px 12px 0px 8px;
 }
 
-.theirMessageName{
+.theirMessage {
     justify-content: flex-start;
     margin: 4px 0px 0px 0px;
     text-align: left;
     padding: 0px 8px 0px 12px;
 }
 
-.theirMessage {
-    justify-content: flex-start;
-    margin: 4px 0px 0px 0px;
-    text-align: left;
-    padding: 0px 8px 0px 12px;
+.theirMessageName{
+    font-size: 12px;
+    margin-bottom: -3px;
+    margin-left: 10px;
 }
 
 .msgp {

@@ -89,8 +89,8 @@ async function enterChat (name, id) {
 
                 messageInsert.insertAdjacentHTML('beforeend', `
                 
+                    <p class="theirMessageName" msgp>` + parsedData.messages[x].senderName + `</p>
                     <div class="theirMessage msg">
-                        <p class="theirMessageName" msgp>` + parsedData.messages[x].senderName + `</p>
                         <p class="theirMessageP msgp">` + parsedData.messages[x].text + `</p>
                     </div>
                     
