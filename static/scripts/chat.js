@@ -2,25 +2,26 @@
 
 const chatInsert = document.getElementById('chatInsert');
 
-for (let x = 0; x < chats.length; x++) {
-
-    chatInsert.insertAdjacentHTML('afterbegin', `
-        <div class="chatButton" onclick="enterChat('`+chats[x].name.trim()+`', '`+ chats[x]._id.trim() +`')">
-            <div class="leftChatContent">
-                <img src="/defaultPicture.svg" class="defaultPic">
-                <p class="chatName">` + chats[x].name + `</p>
+if (chats) {
+    for (let x = 0; x < chats.length; x++) {
+        chatInsert.insertAdjacentHTML('afterbegin', `
+            <div class="chatButton" onclick="enterChat('`+chats[x].name.trim()+`', '`+ chats[x]._id.trim() +`')">
+                <div class="leftChatContent">
+                    <img src="/defaultPicture.svg" class="defaultPic">
+                    <p class="chatName">` + chats[x].name + `</p>
+                </div>
+                <button class="optionsButton" onclick="expandButton(this)">
+                    <img src="/messageOptions.svg" class="messageOptionsIcon">
+                </button>
+                <div class="expandedButton">
+                    <button class="unreadButton" onclick="markAsUnread(event, ` + chats[x]._id.trim() + `)">Mark as unread</button>
+                    <button class="leaveButton" onclick="leaveChat(event, '` + chats[x]._id.trim() + `')">Leave chat</button>
+                </div>
             </div>
-            <button class="optionsButton" onclick="expandButton(this)">
-                <img src="/messageOptions.svg" class="messageOptionsIcon">
-            </button>
-            <div class="expandedButton">
-                <button class="unreadButton" onclick="markAsUnread(event, ` + chats[x]._id.trim() + `)">Mark as unread</button>
-                <button class="leaveButton" onclick="leaveChat(event, '` + chats[x]._id.trim() + `')">Leave chat</button>
-            </div>
-        </div>
-    `);
-
+        `);
+    }
 }
+
 enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
 function markAsUnread (e, id) {
