@@ -15,6 +15,8 @@ import multerS3 from "multer-s3";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuid } from "uuid";
 
+import sanitizeHtml from 'sanitize-html';
+
 import pkg from 'lodash';
 const { chunk } = pkg;
 
@@ -297,6 +299,17 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
 
         return res.json({status: '401'});
     
+    }
+
+    const rawMessage = String(req.body.msg);
+
+    const safeMessage = sanitizeHtml(rawMessage, {
+        allowedTags: [],
+        allowedAttributes: {} 
+    });
+
+    if (!safeMessage.trim()) {
+        return res.json({ status: 400, error: "Invalid message format" });
     }
 
     const currChunk = await Message.findById(chat.messageIds[chat.messageIds.length - 1]);
