@@ -26,6 +26,9 @@ const socket = io();
 let currentChatId = null;
 
 socket.on('connect', () => {
+    console.log('Socket connected');
+    console.log('Chats:', chats);
+
     enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 });
 
