@@ -22,6 +22,9 @@ if (chats) {
     }
 }
 
+const socket = io();
+let currentChatId = null;
+
 enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
 
 function markAsUnread (e, id) {
@@ -57,6 +60,14 @@ function expandButton (doc) {
 }
 
 async function enterChat (name, id) {
+
+    if (currentChatId) {
+        socket.emit('leaveChat', currentChatId);
+    }
+    
+    currentChatId = id;
+    socket.emit('joinChat', id);
+
     topChatName.innerHTML = name;
 
     chatSendContainer.innerHTML = `
@@ -140,6 +151,18 @@ async function enterChat (name, id) {
         }
     });
 }
+
+socket.on('newMessage', (data) => {
+    if (data.sender !== user.username) {
+        messageInsert.insertAdjacentHTML('beforeend', `
+            <p class="theirMessageName msgp">${data.senderName}</p>
+            <div class="theirMessage msg">
+                <p class="theirMessageP msgp">${data.text}</p>
+            </div>
+        `);
+        messageInsert.scrollTop = messageInsert.scrollHeight;
+    }
+});
 
 async function getNames () {
     try{ 
