@@ -25,7 +25,9 @@ if (chats) {
 const socket = io();
 let currentChatId = null;
 
-enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
+socket.on('connect', () => {
+    enterChat(chats[chats.length - 1].name.trim(), chats[chats.length - 1]._id.trim());
+});
 
 function markAsUnread (e, id) {
   
