@@ -2,7 +2,6 @@
 
 const chatInsert = document.getElementById('chatInsert');
 
-console.log(chats)
 if (chats) {
     for (let x = 0; x < chats.length; x++) {
         chatInsert.insertAdjacentHTML('afterbegin', `

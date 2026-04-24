@@ -17,9 +17,9 @@
                 <div id="formContainer">
                     <form id="newChat" action="/newChat" method="POST">
                         <div id="formInputs">
-                            <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
+                            <input type="text" name="chatName" placeholder="Name Your Chat" id="chatNameInput" required>
                             <div id="inputWrapper">
-                                <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" tabindex="-1">
+                                <input type="text" name="chatUser" placeholder="Add Chat User" id="userNameInput" tabindex="-1" required>
                                 <div id="ghostText"></div>
                             </div>
                             <button type="submit" id="submitButton"><img src="/add.svg" id="addImage"></button>
