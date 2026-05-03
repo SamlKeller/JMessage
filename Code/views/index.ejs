@@ -13,13 +13,12 @@
     <div id="pageContainer">
         <div id="chatsSideBar" class="backgroundSections"> 
             <div id="sideBarContainer">
-                <div id="userOptionsBar" class="noselect"></div>
                 <div id="formContainer">
                     <form id="newChat" action="/newChat" method="POST">
                         <div id="formInputs">
-                            <input type="text" name="chatName" placeholder="Chat name" id="chatNameInput">
+                            <input type="text" name="chatName" placeholder="Name Your Chat" id="chatNameInput" required>
                             <div id="inputWrapper">
-                                <input type="text" name="chatUser" placeholder="Chat users" id="userNameInput" tabindex="-1">
+                                <input type="text" name="chatUser" placeholder="Add Chat User" id="userNameInput" tabindex="-1" required>
                                 <div id="ghostText"></div>
                             </div>
                             <button type="submit" id="submitButton"><img src="/add.svg" id="addImage"></button>
@@ -36,7 +35,7 @@
             <div id="messages"></div>
             <div id="chatSendContainer">
                 <form id="sendMessageBar" action="/submitMessage" method="POST">
-                    <input type="text" placeholder="Send a message" id="sendMessageInput" name="msg">
+                    <input type="text" placeholder="Send a message" id="sendMessageInput" name="msg"  autocomplete="off">
                     <button type="submit" id="submitMessage"><img src="/send.svg" id="sendMessageIcon"></button>
                 </form>
             </div>
@@ -54,6 +53,7 @@
         const messageInput = document.getElementById("sendMessageInput");
 
     </script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/chat.js"></script>
 </body>
 </html>

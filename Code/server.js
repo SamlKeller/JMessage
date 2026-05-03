@@ -29,10 +29,25 @@ import Chat from './Schemas/chatSchema.js';
 
 import IonStrategy from './ionStrategy.js';
 
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+io.on('connection', (socket) => {
+    socket.on('joinChat', (chatId) => {
+        socket.join(chatId);
+    });
+
+    socket.on('leaveChat', (chatId) => {
+        socket.leave(chatId);
+    });
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -348,6 +363,13 @@ app.post('/sendMessage/:chatId', Utils.ensureLogin, async(req, res) =>  {
 
         await currChunk.save();
     }
+
+    io.to(req.params.chatId).emit('newMessage', {
+        sender: req.user.username, 
+        senderName: req.user.name,
+        text: req.body.msg,
+        timeSent: new Date()
+    });
 
     res.json({
         status: 200
@@ -695,7 +717,7 @@ app.use((req, res) => {
 
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
 export default { User, mongoose }
